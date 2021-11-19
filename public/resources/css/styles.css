@@ -1,0 +1,55 @@
+.modal-overlay{
+    background-color: rgba(0,0,0,.5);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
+.modal-box{
+    position: absolute;
+    width: 50%;
+    background-color: #FFFFFF;
+    border: 1px solid #666;
+    z-index: 2;
+    padding: 20px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+footer{
+    background-color: #0a55a0;
+    font-weight: bold;
+    color: #fff3cd;
+    text-align: center;
+    padding: 50px 0;
+}
+.modal-overlay.hide{
+    display: none !important;
+}
+.modal-overlay.show{
+    display: block !important;
+}
+.btn-success{
+    background-color: #28a745 !important;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 15px;
+    padding: 5px 20px;
+}
+.btn-fail{
+    background-color: #dc3545 !important;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 15px;
+    padding: 5px 20px;
+}
+.info-btn{
+    background-color: #007bff !important;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 15px;
+    padding: 5px 20px;
+}
