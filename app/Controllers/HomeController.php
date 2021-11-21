@@ -10,7 +10,7 @@ class HomeController
 // Homepage action
     public function indexAction(RouteCollection $routes)
     {
-        $routeToCliente = str_replace('{id}', 1, $routes->get('cliente')->getPath());
+        $routeToCliente = str_replace('{id}', 2, $routes->get('cliente')->getPath());
 
         require_once APP_ROOT . '\Views\Home.php';
     }

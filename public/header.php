@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo SITE_NAME; ?>></title>
+    <title><?php echo SITE_NAME; ?></title>
     <link rel="stylesheet" href="<?php echo RESOUCES;?>bootstrap/bootstrap.css">
     <link rel="stylesheet" href="<?php echo RESOUCES;?>css/styles.css">
     <link rel="stylesheet" href="<?php echo RESOUCES;?>fontawesome/css/all.css" />

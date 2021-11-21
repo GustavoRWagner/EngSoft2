@@ -6,8 +6,7 @@ include(HEADER);
     <div class="container">
         <h1>Homepage</h1>
         <p>
-            <a href="<?php echo $routeToCliente ?>">Check the first product</a>
-            <?php echo APP_ROOT; ?>
+            <a href="<?php echo $routeToCliente ?>">Pagina Home De template</a>
         </p>
     </div>
 

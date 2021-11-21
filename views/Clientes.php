@@ -130,7 +130,7 @@ include(HEADER);
         });
     }
     function cancelAction(){
-        $("#modal-title").text("Editar Cliente");
+        $("#modal-title").text("");
         $("#form-type").val("");
         $("#nome").val("");
         $("#endereco").val("");

@@ -35,7 +35,6 @@ class ClienteController
         $Cliente->setCelular($celular);
         $Cliente->setCpf($cpf);
         $response = $Cliente->save();
-
         echo $response;
     }
     public function createAction(string $nome, string $endereco, int $telefone, int $celular, string $cpf,  RouteCollection $routes)
