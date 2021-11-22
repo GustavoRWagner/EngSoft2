@@ -23,10 +23,10 @@ footer{
     text-align: center;
     padding: 50px 0;
 }
-.modal-overlay.hide{
+.hide{
     display: none !important;
 }
-.modal-overlay.show{
+.show{
     display: block !important;
 }
 .btn-success{
@@ -52,4 +52,28 @@ footer{
     border: none;
     border-radius: 15px;
     padding: 5px 20px;
+}
+#response-msg{
+    position: absolute;
+    background-color: #fff;
+    width: 500px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 200px;
+    border: 1px solid;
+    border-radius: 20px;
+    z-index: 10;
+}
+#confirm{
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.color-success{
+    color:#28a745;
+}
+.color-fail{
+    color:#dc3545;
 }

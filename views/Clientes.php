@@ -1,6 +1,10 @@
 <?php
 include(HEADER);
 ?>
+<div id="response-msg" class="hide">
+    <h1 id="response-txt" class="w-100 text-center"></h1>
+    <div id="confirm" class="btn-success" onclick="reloadPage()">Ok!</div>
+</div>
 <div id="modal-overlay" class="modal-overlay hide">
     <div class="modal-box">
         <h1 id="modal-title"></h1>
@@ -29,8 +33,8 @@ include(HEADER);
                     <input id="cpf" name="cpf" type="text" class="form-control">
                 </div>
                 <div class="col-12 d-flex">
-                    <div class="btn-success" onclick="saveAction()">Salvar</div>
-                    <div class="btn-fail" onclick="cancelAction()">Cancelar</div>
+                    <div id="save" class="btn-success" onclick="saveAction()">Salvar</div>
+                    <div id="cancel" class="btn-fail" onclick="cancelAction()">Cancelar</div>
                 </div>
             </div>
         </form>
@@ -39,13 +43,16 @@ include(HEADER);
 
 <section>
     <div class="container">
+        <h1 id="page-title">
+            Meus clientes
+        </h1>
         <div class="row">
-            <div class="info-btn" onclick="addCliente()">Adicionar Cliente</div>
+            <div id="addCliente" class="info-btn" onclick="addCliente()">Adicionar Cliente</div>
         </div>
         <div class="row">
 
             <?php foreach ($clientes as $cliente): ?>
-                <div class="col-4">
+                <div class="col-4 client-box" id="<?php echo $cliente['id'];?>">
                     <div class="row">
                         <div class="col-12">
                             <strong>Nome: </strong><spam id="nome-<?php echo $cliente['id']; ?>"><?php echo $cliente['nome']; ?></spam>
@@ -63,8 +70,8 @@ include(HEADER);
                             <strong>CPF: </strong><spam id="cpf-<?php echo $cliente['id']; ?>"><?php echo $cliente['cpf']; ?></spam>
                         </div>
                         <div class="col-12 text-right d-flex">
-                            <div onclick="editCliente(<?php echo $cliente['id']; ?>)"><i class="fas fa-edit"></i></div>
-                            <div onclick="deleteCliente(<?php echo $cliente['id']; ?>)"><i class="fas fa-trash-alt"></i></div>
+                            <div id="edit-<?php echo $cliente['id'];?>" onclick="editCliente(<?php echo $cliente['id']; ?>)"><i class="fas fa-edit"></i></div>
+                            <div id="delete-<?php echo $cliente['id'];?>" onclick="deleteCliente(<?php echo $cliente['id']; ?>)"><i class="fas fa-trash-alt"></i></div>
                         </div>
                     </div>
                 </div>
@@ -105,11 +112,9 @@ include(HEADER);
         request.done(function (response, textStatus, jqXHR) {
             console.log(response);
             if (response == 1) {
-                alert("deletado com sucesso!");
-                cancelAction();
-                window.location.reload();
+                showResponse("Deletado com sucesso!", "S");
             } else {
-                alert("erro ao salvar" + response )
+                showResponse("Erro ao deletar!", "F");
             }
         });
 
@@ -158,11 +163,9 @@ include(HEADER);
         request.done(function (response, textStatus, jqXHR) {
             console.log(response);
             if (response == 1) {
-                alert("salvo com sucesso!");
-                cancelAction();
-                window.location.reload();
+                showResponse("Salvo com sucesso!", "S");
             } else {
-                alert("erro ao salvar" + response )
+                showResponse("Erro ao salvar!", "F");
             }
         });
 
@@ -181,6 +184,21 @@ include(HEADER);
             // Reenable the inputs
             // $inputs.prop("disabled", false);
         });
+    }
+
+    function showResponse(text, sts){
+        $("#response-txt").text(text);
+        if(sts == "S"){
+            $("#response-txt").addClass("color-success")
+        }else{
+            $("#response-txt").addClass("color-fail")
+        }
+        $("#response-msg").removeClass("hide");
+        $("#response-msg").addClass("show");
+
+    }
+    function reloadPage(){
+        window.location.reload();
     }
 </script>
 
