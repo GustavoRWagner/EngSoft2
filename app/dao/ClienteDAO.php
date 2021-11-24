@@ -24,7 +24,7 @@ class ClienteDAO
         if(strlen((string)$cliente->getCelular()) > 11){
             return false;
         }
-        if(strlen($cliente->getCpf()) > 12){
+        if(strlen($cliente->getCpf()) > 11){
             return false;
         }
         $stmt = $this->pdo->prepare("INSERT INTO clientes (nome, endereco, telefone, celular, cpf) VALUES (?,?,?,?,?)");
