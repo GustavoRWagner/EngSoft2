@@ -23,10 +23,16 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav mr-auto">
+        <div class="collapse navbar-collapse m-1" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="<?php echo SITE_URL;?>/clientes/">Meus Clientes</span></a>
+                    <a class="nav-link" href="<?php echo SITE_URL;?>/clientes/">Clientes</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="<?php echo SITE_URL;?>/vendas/">Vendas</span></a>
+                </li>
+                <li class="nav-item active ml-md-2">
+                     <div id="addCliente" class="btn btn-outline-primary" onclick="addCliente()">Adicionar Cliente</div>
                 </li>
             </ul>
         </div>

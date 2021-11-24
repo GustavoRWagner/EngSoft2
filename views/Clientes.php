@@ -14,23 +14,23 @@ include(HEADER);
                 <input id="id" type="hidden" value="">
                 <div class="col-12 mb-2">
                     <label for="nome">Nome:</label>
-                    <input id="nome" name="nome" type="text" class="form-control">
+                    <input id="nome" name="nome" type="text" class="form-control" placeholder="Ex: Joseph Antonio Silva">
                 </div>
                 <div class="col-12 mb-2">
                     <label for="endereco">Endereço:</label>
-                    <input id="endereco" name="endereco" type="text" class="form-control">
+                    <input id="endereco" name="endereco" type="text" class="form-control" placeholder="Ex: Av. Vitória">
                 </div>
                 <div class="col-12 mb-2">
                     <label for="telefone">Telefone</label>
-                    <input id="telefone" name="telefone" type="text" class="form-control">
+                    <input id="telefone" name="telefone" type="text" class="form-control" placeholder="Ex: 27 33992211">
                 </div>
                 <div class="col-12 mb-2">
                     <label for="celular">Celular</label>
-                    <input id="celular" name="celular" type="text" class="form-control">
+                    <input id="celular" name="celular" type="text" class="form-control" placeholder="Ex: 27 999775500">
                 </div>
                 <div class="col-12 mb-2">
                     <label for="cpf">CPF:</label>
-                    <input id="cpf" name="cpf" type="text" class="form-control">
+                    <input id="cpf" name="cpf" type="text" class="form-control" oninput="mascara(this)" placeholder="Ex: 111.222.777-33">
                 </div>
                 <div class="col-12 d-flex">
                     <div id="save" class="btn-success" onclick="saveAction()">Salvar</div>
@@ -43,16 +43,15 @@ include(HEADER);
 
 <section>
     <div class="container">
-        <h1 id="page-title">
-            Meus clientes
-        </h1>
-        <div class="row">
-            <div id="addCliente" class="info-btn" onclick="addCliente()">Adicionar Cliente</div>
+        <div class="client-border my-3">
+            <h2 id="page-title">
+                Meus clientes
+            </h2>
         </div>
         <div class="row">
 
             <?php foreach ($clientes as $cliente): ?>
-                <div class="col-4 client-box" id="<?php echo $cliente['id'];?>">
+                <div class="col-4 client-box mb-4 " id="<?php echo $cliente['id'];?>">
                     <div class="row">
                         <div class="col-12">
                             <strong>Nome: </strong><spam id="nome-<?php echo $cliente['id']; ?>"><?php echo $cliente['nome']; ?></spam>
@@ -69,7 +68,7 @@ include(HEADER);
                         <div class="col-12">
                             <strong>CPF: </strong><spam id="cpf-<?php echo $cliente['id']; ?>"><?php echo $cliente['cpf']; ?></spam>
                         </div>
-                        <div class="col-12 text-right d-flex">
+                        <div class="col-12 text-right d-flex mt-1">
                             <div id="edit-<?php echo $cliente['id'];?>" onclick="editCliente(<?php echo $cliente['id']; ?>)"><i class="fas fa-edit"></i></div>
                             <div id="delete-<?php echo $cliente['id'];?>" onclick="deleteCliente(<?php echo $cliente['id']; ?>)"><i class="fas fa-trash-alt"></i></div>
                         </div>
@@ -100,6 +99,12 @@ include(HEADER);
 
         $("#modal-overlay").removeClass("hide");
         $("#modal-overlay").addClass("show");
+    }
+    function mascara(i){
+    var v = i.value;
+    i.setAttribute("maxlength", "14");
+    if (v.length == 3 || v.length == 7) i.value += ".";
+    if (v.length == 11) i.value += "-";
     }
     function deleteCliente(id){
         var endpoint = "<?php echo SITE_URL;?>/cliente/delete/"+id
