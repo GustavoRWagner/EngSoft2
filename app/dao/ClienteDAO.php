@@ -24,7 +24,7 @@ class ClienteDAO
         if(strlen((string)$cliente->getCelular()) > 11){
             return false;
         }
-        if(strlen($cliente->getCpf()) > 11){
+        if(strlen($cliente->getCpf()) > 14){
             return false;
         }
         $stmt = $this->pdo->prepare("INSERT INTO clientes (nome, endereco, telefone, celular, cpf) VALUES (?,?,?,?,?)");
@@ -57,7 +57,7 @@ class ClienteDAO
         if(strlen((string)$cliente->getCelular()) > 11){
             return false;
         }
-        if(strlen($cliente->getCpf()) > 12){
+        if(strlen($cliente->getCpf()) > 14){
             return false;
         }
         $stmt = $this->pdo->prepare("UPDATE clientes SET nome=?, endereco=?, telefone=?, celular=?, cpf=? WHERE id=?");
@@ -68,7 +68,7 @@ class ClienteDAO
             }else{
                 return false;
             }
-        }catch (Exception $e){
+        }catch (\Exception $e){
             return false;
         }
     }
@@ -79,8 +79,11 @@ class ClienteDAO
             if ($query->execute([$id])) {
                 return True;
             }
-        } catch (Exception $e) {
-            header("Location: delete-error.php?err=" . $e);
+            else{
+                return false;
+            }
+        } catch (\Exception $e) {
+            return false;
         }
     }
 

@@ -9,7 +9,6 @@ include(HEADER);
             <a href="<?php echo $routeToCliente ?>">Pagina Home De template</a>
         </p>
     </div>
-
 </section>
 <?php
 include(FOOTER);

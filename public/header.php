@@ -29,6 +29,9 @@
                     <a class="nav-link" href="<?php echo SITE_URL;?>/clientes/">Clientes</span></a>
                 </li>
                 <li class="nav-item active">
+                    <a class="nav-link" href="<?php echo SITE_URL;?>/vendedores/">Vendedores</span></a>
+                </li>
+                <li class="nav-item active">
                     <a class="nav-link" href="<?php echo SITE_URL;?>/vendas/">Vendas</span></a>
                 </li>
                 <li class="nav-item active ml-md-2">
