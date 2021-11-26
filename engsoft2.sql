@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 25-Nov-2021 às 16:37
+-- Tempo de geração: 26-Nov-2021 às 06:42
 -- Versão do servidor: 10.4.20-MariaDB
 -- versão do PHP: 8.0.8
 
@@ -29,13 +29,14 @@ USE `engsoft2`;
 -- Estrutura da tabela `clientes`
 --
 
-CREATE TABLE `clientes` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `clientes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(255) NOT NULL,
   `endereco` varchar(255) NOT NULL,
-  `telefone` int(11) DEFAULT NULL,
-  `celular` int(11) DEFAULT NULL,
-  `cpf` varchar(14) NOT NULL
+  `telefone` varchar(20) DEFAULT NULL,
+  `celular` varchar(20) DEFAULT NULL,
+  `cpf` varchar(14) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -44,8 +45,8 @@ CREATE TABLE `clientes` (
 -- Estrutura da tabela `compras`
 --
 
-CREATE TABLE `compras` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `compras` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `vendedor` int(11) NOT NULL,
   `cliente` int(11) NOT NULL,
   `produto` int(11) NOT NULL,
@@ -55,7 +56,8 @@ CREATE TABLE `compras` (
   `parcelas` int(11) NOT NULL,
   `valorParcela` float NOT NULL,
   `formaPagamento` char(1) NOT NULL,
-  `dtVenda` date NOT NULL DEFAULT current_timestamp()
+  `dtVenda` date NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -64,13 +66,14 @@ CREATE TABLE `compras` (
 -- Estrutura da tabela `produtos`
 --
 
-CREATE TABLE `produtos` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `produtos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `descricao` varchar(255) NOT NULL,
-  `valor` float NOT NULL,
+  `valor` varchar(20) NOT NULL,
   `qtdEstoque` int(11) NOT NULL,
   `estoqueMinimo` int(11) NOT NULL,
-  `validade` int(11) DEFAULT NULL
+  `validade` date DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -79,72 +82,17 @@ CREATE TABLE `produtos` (
 -- Estrutura da tabela `vendedores`
 --
 
-CREATE TABLE `vendedores` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `vendedores` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `matricula` varchar(11) NOT NULL,
   `nome` varchar(255) NOT NULL,
   `endereco` varchar(255) NOT NULL,
-  `telefone` int(11) NOT NULL,
+  `telefone` varchar(20) NOT NULL,
   `cpf` varchar(14) NOT NULL,
-  `salarioBase` varchar(10) NOT NULL
+  `salarioBase` varchar(10) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `vendedor_matricula` (`matricula`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Índices para tabelas despejadas
---
-
---
--- Índices para tabela `clientes`
---
-ALTER TABLE `clientes`
-  ADD PRIMARY KEY (`id`);
-
---
--- Índices para tabela `compras`
---
-ALTER TABLE `compras`
-  ADD PRIMARY KEY (`id`);
-
---
--- Índices para tabela `produtos`
---
-ALTER TABLE `produtos`
-  ADD PRIMARY KEY (`id`);
-
---
--- Índices para tabela `vendedores`
---
-ALTER TABLE `vendedores`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `vendedor_matricula` (`matricula`);
-
---
--- AUTO_INCREMENT de tabelas despejadas
---
-
---
--- AUTO_INCREMENT de tabela `clientes`
---
-ALTER TABLE `clientes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de tabela `compras`
---
-ALTER TABLE `compras`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de tabela `produtos`
---
-ALTER TABLE `produtos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de tabela `vendedores`
---
-ALTER TABLE `vendedores`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
