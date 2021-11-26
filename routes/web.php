@@ -20,3 +20,9 @@ $routes->add('vendedores', new Route(constant('URL_SUBFOLDER') .  '/vendedores/'
 $routes->add('vendedorCreate', new Route(constant('URL_SUBFOLDER') .  '/vendedor/create/{nome}/{endereco}/{telefone}/{cpf}/{salarioBase}', array('controller' => 'VendedorController', 'method'=>'createAction')));
 $routes->add('vendedorEdit', new Route(constant('URL_SUBFOLDER') .  '/vendedor/edit/{id}/{matricula}/{nome}/{endereco}/{telefone}/{cpf}/{salarioBase}', array('controller' => 'VendedorController', 'method'=>'editAction')));
 $routes->add('vendedorDelete', new Route(constant('URL_SUBFOLDER') .  '/vendedor/delete/{id}', array('controller' => 'VendedorController', 'method'=>'deleteAction'), array('id' => '[0-9]+')));
+
+//Produtos Routes
+$routes->add('produtos', new Route(constant('URL_SUBFOLDER') .  '/produtos/', array('controller' => 'produtoController', 'method'=>'showListAction')));
+$routes->add('produtoCreate', new Route(constant('URL_SUBFOLDER') .  '/produto/create/{descricao}/{valor}/{qtdEstoque}/{estoqueMinimo}/{validade}', array('controller' => 'produtoController', 'method'=>'createAction')));
+$routes->add('produtoEdit', new Route(constant('URL_SUBFOLDER') .  '/produto/edit/{id}/{descricao}/{valor}/{qtdEstoque}/{estoqueMinimo}/{validade}', array('controller' => 'produtoController', 'method'=>'editAction')));
+$routes->add('produtoDelete', new Route(constant('URL_SUBFOLDER') .  '/produto/delete/{id}', array('controller' => 'produtoController', 'method'=>'deleteAction')));

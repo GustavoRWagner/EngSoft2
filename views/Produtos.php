@@ -8,29 +8,29 @@ include(HEADER);
 <div id="modal-overlay" class="modal-overlay hide">
     <div class="modal-box">
         <h1 id="modal-title"></h1>
-        <form id="editClienteForm" action="">
+        <form action="">
             <div class="row">
                 <input id="form-type" type="hidden" value="">
                 <input id="id" type="hidden" value="">
                 <div class="col-12 mb-2">
-                    <label for="nome">Nome:</label>
-                    <input id="nome" name="nome" type="text" class="form-control" placeholder="Ex: Joseph Antonio Silva">
+                    <label for="descricao">Descrição:</label>
+                    <input id="descricao" name="descricao" type="text" class="form-control" placeholder="Ex: Leite condensado muito gostoso">
                 </div>
                 <div class="col-12 mb-2">
-                    <label for="endereco">Endereço:</label>
-                    <input id="endereco" name="endereco" type="text" class="form-control" placeholder="Ex: Av. Vitória">
+                    <label for="valor">Valor:</label>
+                    <input id="valor" name="valor" type="text" class="form-control" placeholder="Ex: 10,99">
                 </div>
                 <div class="col-12 mb-2">
-                    <label for="telefone">Telefone</label>
-                    <input id="telefone" name="telefone" type="text" class="form-control" placeholder="Ex: 27 33992211">
+                    <label for="qtdEstoque">Quantidade em Estoque</label>
+                    <input id="qtdEstoque" name="qtdEstoque" type="text" class="form-control" placeholder="Ex: 10">
                 </div>
                 <div class="col-12 mb-2">
-                    <label for="celular">Celular</label>
-                    <input id="celular" name="celular" type="text" class="form-control" placeholder="Ex: 27 999775500">
+                    <label for="estoqueMinimo">Estoque minimo</label>
+                    <input id="estoqueMinimo" name="estoqueMinimo" type="text" class="form-control" placeholder="Ex: 5">
                 </div>
                 <div class="col-12 mb-2">
-                    <label for="cpf">CPF:</label>
-                    <input id="cpf" name="cpf" type="text" class="form-control" oninput="mascara(this)" placeholder="Ex: 111.222.777-33">
+                    <label for="validade">Validade</label>
+                    <input id="validade" name="validade" type="text" class="form-control" placeholder="Ex: 11/11/2025">
                 </div>
                 <div class="col-12 d-flex">
                     <div id="save" class="btn-success" onclick="saveAction()">Salvar</div>
@@ -45,33 +45,38 @@ include(HEADER);
     <div class="container">
         <div class="client-border my-3">
             <h2 id="page-title">
-                Meus clientes
+                Produtos
             </h2>
         </div>
         <div class="row">
+            <div id="addProduto" class="info-btn" onclick="addProduto()">Adicionar Produto</div>
+        </div>
+        <div class="row">
 
-            <?php foreach ($clientes as $cliente): ?>
-                <div class="col-4 client-box mb-4" id="<?php echo $cliente['id'];?>">
+            <?php foreach ($produtos as $produto): ?>
+                <div class="col-4 client-box mb-4 " id="<?php echo $produto['id'];?>">
                     <div class="row">
+                        <div class="col-12 text-right d-flex mt-1">
+                            <div id="edit-<?php echo $produto['id'];?>" onclick="editCliente(<?php echo $produto['id']; ?>)"><i class="fas fa-edit"></i></div>
+                            <div id="delete-<?php echo $produto['id'];?>" onclick="deleteCliente(<?php echo $produto['id']; ?>)"><i class="fas fa-trash-alt"></i></div>
+                        </div>
+                        <input id="estoqueMinimo-<?php echo $produto['id']; ?>" type="hidden" value="<?php echo $produto['estoqueMinimo']; ?>">
                         <div class="col-12">
-                            <strong>Nome: </strong><spam id="nome-<?php echo $cliente['id']; ?>"><?php echo $cliente['nome']; ?></spam>
+                            <spam id="descricao-<?php echo $produto['id']; ?>"><?php echo $produto['descricao']; ?></spam>
                         </div>
                         <div class="col-12">
-                            <strong>Endreço: </strong><spam id="endereco-<?php echo $cliente['id']; ?>"><?php echo $cliente['endereco']; ?></spam>
+                            Qtd:<spam id="qtdEstoque-<?php echo $produto['id']; ?>"><?php echo $produto['qtdEstoque']; ?></spam>
                         </div>
                         <div class="col-12">
-                            <strong>Telefone: </strong><spam id="telefone-<?php echo $cliente['id']; ?>"><?php echo $cliente['telefone']; ?></spam>
+                            R$<spam id="valor-<?php echo $produto['id']; ?>"><?php echo $produto['valor']; ?></spam>
                         </div>
                         <div class="col-12">
-                            <strong>Celular: </strong><spam id="celular-<?php echo $cliente['id']; ?>"><?php echo $cliente['celular']; ?></spam>
-                        </div>
-                        <div class="col-12">
-                            <strong>CPF: </strong><spam id="cpf-<?php echo $cliente['id']; ?>"><?php echo $cliente['cpf']; ?></spam>
+                            <spam id="validade-<?php echo $produto['id']; ?>"><?php echo $produto['validade']; ?></spam>
                         </div>
                         <div class="col-12 text-right d-flex mt-1">
-                            <div id="edit-<?php echo $cliente['id'];?>" onclick="editCliente(<?php echo $cliente['id']; ?>)"><i class="fas fa-edit"></i></div>
-                            <div id="delete-<?php echo $cliente['id'];?>" onclick="deleteCliente(<?php echo $cliente['id']; ?>)"><i class="fas fa-trash-alt"></i></div>
+                            <div id="edit-<?php echo $produto['id'];?>" class="btn-success" onclick="efetuarVenda(<?php echo $produto['id']; ?>)">Efetuar venda</div>
                         </div>
+
                     </div>
                 </div>
             <?php endforeach; ?>
@@ -79,8 +84,8 @@ include(HEADER);
     </div>
 </section>
 <script>
-    function addCliente(){
-        $("#modal-title").text("Adicionar Cliente");
+    function addProduto(){
+        $("#modal-title").text("Adicionar Produto");
         $("#form-type").val("create");
 
         $("#modal-overlay").removeClass("hide");
@@ -88,26 +93,20 @@ include(HEADER);
     }
 
     function editCliente(id){
-        $("#modal-title").text("Editar Cliente");
+        $("#modal-title").text("Editar Produto");
         $("#form-type").val("edit");
         $("#id").val(id);
-        $("#nome").val($("#nome-"+id).text());
-        $("#endereco").val($("#endereco-"+id).text());
-        $("#telefone").val($("#telefone-"+id).text());
-        $("#celular").val($("#celular-"+id).text());
-        $("#cpf").val($("#cpf-"+id).text());
+        $("#descricao").val($("#descricao-"+id).text());
+        $("#valor").val($("#valor-"+id).text());
+        $("#qtdEstoque").val($("#qtdEstoque-"+id).text());
+        $("#estoqueMinimo").val($("#estoqueMinimo-"+id).val());
+        $("#validade").val($("#validade-"+id).text());
 
         $("#modal-overlay").removeClass("hide");
         $("#modal-overlay").addClass("show");
     }
-    function mascara(i){
-    var v = i.value;
-    i.setAttribute("maxlength", "14");
-    if (v.length == 3 || v.length == 7) i.value += ".";
-    if (v.length == 11) i.value += "-";
-    }
     function deleteCliente(id){
-        var endpoint = "<?php echo SITE_URL;?>/cliente/delete/"+id
+        var endpoint = "<?php echo SITE_URL;?>/produto/delete/"+id
         request = $.ajax({
             url: endpoint,
             type: "post",
@@ -154,10 +153,10 @@ include(HEADER);
     function saveAction(){
         var endpoint = ""
         if($("#form-type").val() == 'edit'){
-            endpoint = "<?php echo SITE_URL;?>/cliente/edit/"+$("#id").val()+"/"+$("#nome").val()+"/"+$("#endereco").val()+"/"+$("#telefone").val()+"/"+$("#celular").val()+"/"+$("#cpf").val()
+            endpoint = "<?php echo SITE_URL;?>/produto/edit/"+$("#id").val()+"/"+$("#descricao").val()+"/"+$("#valor").val()+"/"+$("#qtdEstoque").val()+"/"+$("#estoqueMinimo").val()+"/"+$("#validade").val()
         }
         if($("#form-type").val() == 'create'){
-            endpoint = "<?php echo SITE_URL;?>/cliente/create/"+$("#nome").val()+"/"+$("#endereco").val()+"/"+$("#telefone").val()+"/"+$("#celular").val()+"/"+$("#cpf").val()
+            endpoint = "<?php echo SITE_URL;?>/produto/create/"+$("#descricao").val()+"/"+$("#valor").val()+"/"+$("#qtdEstoque").val()+"/"+$("#estoqueMinimo").val()+"/"+$("#validade").val()
         }
         request = $.ajax({
             url: endpoint,

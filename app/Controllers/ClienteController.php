@@ -37,7 +37,7 @@ class ClienteController
         $response = $Cliente->save();
         echo $response;
     }
-    public function createAction(string $nome, string $endereco, int $telefone, int $celular, string $cpf,  RouteCollection $routes)
+    public function createAction(string $nome, string $endereco, string $telefone, string $celular, string $cpf,  RouteCollection $routes)
     {
         $Cliente = new Cliente();
         $Cliente->setNome($nome);

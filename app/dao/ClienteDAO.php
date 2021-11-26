@@ -48,13 +48,13 @@ class ClienteDAO
         if(strlen($cliente->getNome()) > 255){
             return false;
         }
-        if(strlen((string)$cliente->getEndereco()) > 255){
+        if(strlen($cliente->getEndereco()) > 255){
             return false;
         }
-        if(strlen((string)$cliente->getTelefone()) > 11){
+        if(strlen($cliente->getTelefone()) > 20){
             return false;
         }
-        if(strlen((string)$cliente->getCelular()) > 11){
+        if(strlen($cliente->getCelular()) > 20){
             return false;
         }
         if(strlen($cliente->getCpf()) > 14){
