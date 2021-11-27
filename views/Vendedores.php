@@ -56,46 +56,61 @@ include(HEADER);
         <div class="row">
             <table class="table mt-3 mb-3">
                 <thead>
-                <tr>
-                    <th scope="col">Matricula</th>
-                    <th scope="col">Nome</th>
-                    <th scope="col">Endreço</th>
-                    <th scope="col">Telefone</th>
-                    <th scope="col">CPF</th>
-                    <th scope="col">Salario Base</th>
-                    <th scope="col">Ações</th>
-                </tr>
+                    <tr>
+                        <th scope="col">Matricula</th>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Endreço</th>
+                        <th scope="col">Telefone</th>
+                        <th scope="col">CPF</th>
+                        <th scope="col">Salario Base</th>
+                        <th scope="col">Ações</th>
+                    </tr>
                 </thead>
                 <tbody>
-                <?php foreach ($vendedores as $vendedor): ?>
-                <tr>
-                    <th id="<?php echo $vendedor['id'];?>" scope="row"><spam id="matricula-<?php echo $vendedor['id']; ?>"><?php echo $vendedor['matricula']; ?></spam></th>
-                    <td><spam id="nome-<?php echo $vendedor['id']; ?>"><?php echo $vendedor['nome']; ?></spam></td>
-                    <td><spam id="endereco-<?php echo $vendedor['id']; ?>"><?php echo $vendedor['endereco']; ?></spam></td>
-                    <td><spam id="telefone-<?php echo $vendedor['id']; ?>"><?php echo $vendedor['telefone']; ?></spam></td>
-                    <td><spam id="cpf-<?php echo $vendedor['id']; ?>"><?php echo $vendedor['cpf']; ?></spam></td>
-                    <td>
-                        <spam id="salario-<?php echo $vendedor['id']; ?>"><?php echo number_format((float)str_replace
-                            (",", ".",str_replace(".","", $vendedor['salarioBase'])),
-                                2, ",", "."); ?>
-                        </spam></td>
-                    <td>
-                        <i id="edit-<?php echo $vendedor['id'];?>" onclick="editVendedor(<?php echo $vendedor['id']; ?>)" class="fas fa-edit" data-toggle="tooltip" title="Editar"></i>
-                        <i id="delete-<?php echo $vendedor['id'];?>" onclick="deleteVendedor(<?php echo $vendedor['id']; ?>)" class="fas fa-trash-alt"  data-toggle="tooltip" title="Deletar"></i>
-                        <i id="delete-<?php echo $vendedor['id'];?>" onclick="calcSalarioVendedor(<?php echo $vendedor['id']; ?>)" class="fas fa-comment-dollar"  data-toggle="tooltip" title="Calcular salario"></i>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
+                    <?php foreach ($vendedores as $vendedor) : ?>
+                        <tr>
+                            <th id="<?php echo $vendedor['id']; ?>" scope="row">
+                                <spam id="matricula-<?php echo $vendedor['id']; ?>"><?php echo $vendedor['matricula']; ?></spam>
+                            </th>
+                            <td>
+                                <spam id="nome-<?php echo $vendedor['id']; ?>"><?php echo $vendedor['nome']; ?></spam>
+                            </td>
+                            <td>
+                                <spam id="endereco-<?php echo $vendedor['id']; ?>"><?php echo $vendedor['endereco']; ?></spam>
+                            </td>
+                            <td>
+                                <spam id="telefone-<?php echo $vendedor['id']; ?>"><?php echo $vendedor['telefone']; ?></spam>
+                            </td>
+                            <td>
+                                <spam id="cpf-<?php echo $vendedor['id']; ?>"><?php echo $vendedor['cpf']; ?></spam>
+                            </td>
+                            <td>
+                                <spam id="salario-<?php echo $vendedor['id']; ?>"><?php echo number_format(
+                                                                                        (float)str_replace(",", ".", str_replace(".", "", $vendedor['salarioBase'])),
+                                                                                        2,
+                                                                                        ",",
+                                                                                        "."
+                                                                                    ); ?>
+                                </spam>
+                            </td>
+                            <td>
+                                <i id="edit-<?php echo $vendedor['id']; ?>" onclick="editVendedor(<?php echo $vendedor['id']; ?>)" class="fas fa-edit" data-toggle="tooltip" title="Editar"></i>
+                                <i id="delete-<?php echo $vendedor['id']; ?>" onclick="deleteVendedor(<?php echo $vendedor['id']; ?>)" class="fas fa-trash-alt" data-toggle="tooltip" title="Deletar"></i>
+                                <i id="delete-<?php echo $vendedor['id']; ?>" onclick="calcSalarioVendedor(<?php echo $vendedor['id']; ?>)" class="fas fa-comment-dollar" data-toggle="tooltip" title="Calcular salario"></i>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
     </div>
 </section>
 <script>
-    $(function () {
+    $(function() {
         $('[data-toggle="tooltip"]').tooltip()
     })
-    function addVendedor(){
+
+    function addVendedor() {
         $("#modal-title").text("Adicionar Vendedor");
         $("#form-type").val("create");
 
@@ -106,7 +121,7 @@ include(HEADER);
         $("#modal-overlay").addClass("show");
     }
 
-    function editVendedor(id){
+    function editVendedor(id) {
 
         $("#matricula-field").addClass("show");
         $("#matricula-field").removeClass("hide");
@@ -114,26 +129,27 @@ include(HEADER);
         $("#modal-title").text("Editar Vendedor");
         $("#form-type").val("edit");
         $("#id").val(id);
-        $("#matricula").val($("#matricula-"+id).text())
-        $("#nome").val($("#nome-"+id).text());
-        $("#endereco").val($("#endereco-"+id).text());
-        $("#telefone").val($("#telefone-"+id).text());
-        $("#celular").val($("#celular-"+id).text());
-        $("#cpf").val($("#cpf-"+id).text());
-        $("#salariobase").val($("#salario-"+id).text());
+        $("#matricula").val($("#matricula-" + id).text())
+        $("#nome").val($("#nome-" + id).text());
+        $("#endereco").val($("#endereco-" + id).text());
+        $("#telefone").val($("#telefone-" + id).text());
+        $("#celular").val($("#celular-" + id).text());
+        $("#cpf").val($("#cpf-" + id).text());
+        $("#salariobase").val($("#salario-" + id).text());
 
         $("#modal-overlay").removeClass("hide");
         $("#modal-overlay").addClass("show");
     }
-    function deleteVendedor(id){
-        var endpoint = "<?php echo SITE_URL;?>/vendedor/delete/"+id
+
+    function deleteVendedor(id) {
+        var endpoint = "<?php echo SITE_URL; ?>/vendedor/delete/" + id
         request = $.ajax({
             url: endpoint,
             type: "post",
         });
 
         // Callback handler that will be called on success
-        request.done(function (response, textStatus, jqXHR) {
+        request.done(function(response, textStatus, jqXHR) {
             console.log(response);
             if (response == 1) {
                 showResponse("Deletado com sucesso!", "S");
@@ -143,7 +159,7 @@ include(HEADER);
         });
 
         // Callback handler that will be called on failure
-        request.fail(function (jqXHR, textStatus, errorThrown) {
+        request.fail(function(jqXHR, textStatus, errorThrown) {
             // Log the error to the console
             console.error(
                 "The following error occurred: " +
@@ -153,12 +169,13 @@ include(HEADER);
 
         // Callback handler that will be called regardless
         // if the request failed or succeeded
-        request.always(function () {
+        request.always(function() {
             // Reenable the inputs
             // $inputs.prop("disabled", false);
         });
     }
-    function cancelAction(){
+
+    function cancelAction() {
         $("#modal-title").text("");
         $("#form-type").val("");
         $("#matricula").val("");
@@ -171,15 +188,16 @@ include(HEADER);
         $("#modal-overlay").removeClass("show");
         $("#modal-overlay").addClass("hide");
     }
-    function saveAction(){
+
+    function saveAction() {
         var endpoint = ""
         // let salariobase = parseFloat($("#salariobase").val().replace('.', '').replace(',', '.'))
         // console.log(salariobase)
-        if($("#form-type").val() == 'edit'){
-            endpoint = "<?php echo SITE_URL;?>/vendedor/edit/"+$("#id").val()+"/"+$("#matricula").val()+"/"+$("#nome").val()+"/"+$("#endereco").val()+"/"+$("#telefone").val()+"/"+$("#cpf").val()+"/"+$("#salariobase").val()
+        if ($("#form-type").val() == 'edit') {
+            endpoint = "<?php echo SITE_URL; ?>/vendedor/edit/" + $("#id").val() + "/" + $("#matricula").val() + "/" + $("#nome").val() + "/" + $("#endereco").val() + "/" + $("#telefone").val() + "/" + $("#cpf").val() + "/" + $("#salariobase").val()
         }
-        if($("#form-type").val() == 'create'){
-            endpoint = "<?php echo SITE_URL;?>/vendedor/create/"+$("#nome").val()+"/"+$("#endereco").val()+"/"+$("#telefone").val()+"/"+$("#cpf").val()+"/"+$("#salariobase").val()
+        if ($("#form-type").val() == 'create') {
+            endpoint = "<?php echo SITE_URL; ?>/vendedor/create/" + $("#nome").val() + "/" + $("#endereco").val() + "/" + $("#telefone").val() + "/" + $("#cpf").val() + "/" + $("#salariobase").val()
         }
         console.log(endpoint)
         request = $.ajax({
@@ -188,7 +206,7 @@ include(HEADER);
         });
 
         // Callback handler that will be called on success
-        request.done(function (response, textStatus, jqXHR) {
+        request.done(function(response, textStatus, jqXHR) {
             console.log(response);
             if (response == 1) {
                 showResponse("Salvo com sucesso!", "S");
@@ -198,7 +216,7 @@ include(HEADER);
         });
 
         // Callback handler that will be called on failure
-        request.fail(function (jqXHR, textStatus, errorThrown) {
+        request.fail(function(jqXHR, textStatus, errorThrown) {
             // Log the error to the console
             console.error(
                 "The following error occurred: " +
@@ -208,27 +226,29 @@ include(HEADER);
 
         // Callback handler that will be called regardless
         // if the request failed or succeeded
-        request.always(function () {
+        request.always(function() {
             // Reenable the inputs
             // $inputs.prop("disabled", false);
         });
     }
 
-    function showResponse(text, sts){
+    function showResponse(text, sts) {
         $("#response-txt").text(text);
-        if(sts == "S"){
+        if (sts == "S") {
             $("#response-txt").addClass("color-success")
-        }else{
+        } else {
             $("#response-txt").addClass("color-fail")
         }
         $("#response-msg").removeClass("hide");
         $("#response-msg").addClass("show");
 
     }
-    function reloadPage(){
+
+    function reloadPage() {
         window.location.reload();
     }
-    function calcSalarioVendedor(id){
+
+    function calcSalarioVendedor(id) {
 
     }
 </script>

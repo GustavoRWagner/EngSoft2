@@ -34,7 +34,7 @@ include(HEADER);
                 </div>
                 <div class="col-12 d-flex">
                     <div id="save" class="btn-success" onclick="saveAction()">Salvar</div>
-                    <div id="cancel" class="btn-fail" onclick="cancelAction()">Cancelar</div>
+                    <div id="cancel" class="btn-fail ml-1" onclick="cancelAction()">Cancelar</div>
                 </div>
             </div>
         </form>
@@ -49,28 +49,35 @@ include(HEADER);
             </h2>
         </div>
         <div class="row">
-
-            <?php foreach ($clientes as $cliente): ?>
-                <div class="col-4 client-box mb-4" id="<?php echo $cliente['id'];?>">
+            <div id="addCliente" class="info-btn mb-2 ml-2" onclick="addCliente()">Adicionar Cliente</div>
+        </div>
+        <div class="row">
+            <?php foreach ($clientes as $cliente) : ?>
+                <div class="col-4 client-box mb-4" id="<?php echo $cliente['id']; ?>">
                     <div class="row">
                         <div class="col-12">
-                            <strong>Nome: </strong><spam id="nome-<?php echo $cliente['id']; ?>"><?php echo $cliente['nome']; ?></spam>
+                            <strong>Nome: </strong>
+                            <spam id="nome-<?php echo $cliente['id']; ?>"><?php echo $cliente['nome']; ?></spam>
                         </div>
                         <div class="col-12">
-                            <strong>Endreço: </strong><spam id="endereco-<?php echo $cliente['id']; ?>"><?php echo $cliente['endereco']; ?></spam>
+                            <strong>Endreço: </strong>
+                            <spam id="endereco-<?php echo $cliente['id']; ?>"><?php echo $cliente['endereco']; ?></spam>
                         </div>
                         <div class="col-12">
-                            <strong>Telefone: </strong><spam id="telefone-<?php echo $cliente['id']; ?>"><?php echo $cliente['telefone']; ?></spam>
+                            <strong>Telefone: </strong>
+                            <spam id="telefone-<?php echo $cliente['id']; ?>"><?php echo $cliente['telefone']; ?></spam>
                         </div>
                         <div class="col-12">
-                            <strong>Celular: </strong><spam id="celular-<?php echo $cliente['id']; ?>"><?php echo $cliente['celular']; ?></spam>
+                            <strong>Celular: </strong>
+                            <spam id="celular-<?php echo $cliente['id']; ?>"><?php echo $cliente['celular']; ?></spam>
                         </div>
                         <div class="col-12">
-                            <strong>CPF: </strong><spam id="cpf-<?php echo $cliente['id']; ?>"><?php echo $cliente['cpf']; ?></spam>
+                            <strong>CPF: </strong>
+                            <spam id="cpf-<?php echo $cliente['id']; ?>"><?php echo $cliente['cpf']; ?></spam>
                         </div>
                         <div class="col-12 text-right d-flex mt-1">
-                            <div id="edit-<?php echo $cliente['id'];?>" onclick="editCliente(<?php echo $cliente['id']; ?>)"><i class="fas fa-edit"></i></div>
-                            <div id="delete-<?php echo $cliente['id'];?>" onclick="deleteCliente(<?php echo $cliente['id']; ?>)"><i class="fas fa-trash-alt"></i></div>
+                            <div id="edit-<?php echo $cliente['id']; ?>" onclick="editCliente(<?php echo $cliente['id']; ?>)"><i class="fas fa-edit"></i></div>
+                            <div id="delete-<?php echo $cliente['id']; ?>" onclick="deleteCliente(<?php echo $cliente['id']; ?>)"><i class="fas fa-trash-alt"></i></div>
                         </div>
                     </div>
                 </div>
@@ -79,7 +86,7 @@ include(HEADER);
     </div>
 </section>
 <script>
-    function addCliente(){
+    function addCliente() {
         $("#modal-title").text("Adicionar Cliente");
         $("#form-type").val("create");
 
@@ -87,34 +94,36 @@ include(HEADER);
         $("#modal-overlay").addClass("show");
     }
 
-    function editCliente(id){
+    function editCliente(id) {
         $("#modal-title").text("Editar Cliente");
         $("#form-type").val("edit");
         $("#id").val(id);
-        $("#nome").val($("#nome-"+id).text());
-        $("#endereco").val($("#endereco-"+id).text());
-        $("#telefone").val($("#telefone-"+id).text());
-        $("#celular").val($("#celular-"+id).text());
-        $("#cpf").val($("#cpf-"+id).text());
+        $("#nome").val($("#nome-" + id).text());
+        $("#endereco").val($("#endereco-" + id).text());
+        $("#telefone").val($("#telefone-" + id).text());
+        $("#celular").val($("#celular-" + id).text());
+        $("#cpf").val($("#cpf-" + id).text());
 
         $("#modal-overlay").removeClass("hide");
         $("#modal-overlay").addClass("show");
     }
-    function mascara(i){
-    var v = i.value;
-    i.setAttribute("maxlength", "14");
-    if (v.length == 3 || v.length == 7) i.value += ".";
-    if (v.length == 11) i.value += "-";
+
+    function mascara(i) {
+        var v = i.value;
+        i.setAttribute("maxlength", "14");
+        if (v.length == 3 || v.length == 7) i.value += ".";
+        if (v.length == 11) i.value += "-";
     }
-    function deleteCliente(id){
-        var endpoint = "<?php echo SITE_URL;?>/cliente/delete/"+id
+
+    function deleteCliente(id) {
+        var endpoint = "<?php echo SITE_URL; ?>/cliente/delete/" + id
         request = $.ajax({
             url: endpoint,
             type: "post",
         });
 
         // Callback handler that will be called on success
-        request.done(function (response, textStatus, jqXHR) {
+        request.done(function(response, textStatus, jqXHR) {
             console.log(response);
             if (response == 1) {
                 showResponse("Deletado com sucesso!", "S");
@@ -124,7 +133,7 @@ include(HEADER);
         });
 
         // Callback handler that will be called on failure
-        request.fail(function (jqXHR, textStatus, errorThrown) {
+        request.fail(function(jqXHR, textStatus, errorThrown) {
             // Log the error to the console
             console.error(
                 "The following error occurred: " +
@@ -134,12 +143,13 @@ include(HEADER);
 
         // Callback handler that will be called regardless
         // if the request failed or succeeded
-        request.always(function () {
+        request.always(function() {
             // Reenable the inputs
             // $inputs.prop("disabled", false);
         });
     }
-    function cancelAction(){
+
+    function cancelAction() {
         $("#modal-title").text("");
         $("#form-type").val("");
         $("#nome").val("");
@@ -151,13 +161,14 @@ include(HEADER);
         $("#modal-overlay").removeClass("show");
         $("#modal-overlay").addClass("hide");
     }
-    function saveAction(){
+
+    function saveAction() {
         var endpoint = ""
-        if($("#form-type").val() == 'edit'){
-            endpoint = "<?php echo SITE_URL;?>/cliente/edit/"+$("#id").val()+"/"+$("#nome").val()+"/"+$("#endereco").val()+"/"+$("#telefone").val()+"/"+$("#celular").val()+"/"+$("#cpf").val()
+        if ($("#form-type").val() == 'edit') {
+            endpoint = "<?php echo SITE_URL; ?>/cliente/edit/" + $("#id").val() + "/" + $("#nome").val() + "/" + $("#endereco").val() + "/" + $("#telefone").val() + "/" + $("#celular").val() + "/" + $("#cpf").val()
         }
-        if($("#form-type").val() == 'create'){
-            endpoint = "<?php echo SITE_URL;?>/cliente/create/"+$("#nome").val()+"/"+$("#endereco").val()+"/"+$("#telefone").val()+"/"+$("#celular").val()+"/"+$("#cpf").val()
+        if ($("#form-type").val() == 'create') {
+            endpoint = "<?php echo SITE_URL; ?>/cliente/create/" + $("#nome").val() + "/" + $("#endereco").val() + "/" + $("#telefone").val() + "/" + $("#celular").val() + "/" + $("#cpf").val()
         }
         request = $.ajax({
             url: endpoint,
@@ -165,7 +176,7 @@ include(HEADER);
         });
 
         // Callback handler that will be called on success
-        request.done(function (response, textStatus, jqXHR) {
+        request.done(function(response, textStatus, jqXHR) {
             console.log(response);
             if (response == 1) {
                 showResponse("Salvo com sucesso!", "S");
@@ -175,7 +186,7 @@ include(HEADER);
         });
 
         // Callback handler that will be called on failure
-        request.fail(function (jqXHR, textStatus, errorThrown) {
+        request.fail(function(jqXHR, textStatus, errorThrown) {
             // Log the error to the console
             console.error(
                 "The following error occurred: " +
@@ -185,24 +196,25 @@ include(HEADER);
 
         // Callback handler that will be called regardless
         // if the request failed or succeeded
-        request.always(function () {
+        request.always(function() {
             // Reenable the inputs
             // $inputs.prop("disabled", false);
         });
     }
 
-    function showResponse(text, sts){
+    function showResponse(text, sts) {
         $("#response-txt").text(text);
-        if(sts == "S"){
+        if (sts == "S") {
             $("#response-txt").addClass("color-success")
-        }else{
+        } else {
             $("#response-txt").addClass("color-fail")
         }
         $("#response-msg").removeClass("hide");
         $("#response-msg").addClass("show");
 
     }
-    function reloadPage(){
+
+    function reloadPage() {
         window.location.reload();
     }
 </script>
