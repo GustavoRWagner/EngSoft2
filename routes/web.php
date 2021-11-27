@@ -22,7 +22,14 @@ $routes->add('vendedorEdit', new Route(constant('URL_SUBFOLDER') .  '/vendedor/e
 $routes->add('vendedorDelete', new Route(constant('URL_SUBFOLDER') .  '/vendedor/delete/{id}', array('controller' => 'VendedorController', 'method'=>'deleteAction'), array('id' => '[0-9]+')));
 
 //Produtos Routes
-$routes->add('produtos', new Route(constant('URL_SUBFOLDER') .  '/produtos/', array('controller' => 'produtoController', 'method'=>'showListAction')));
+$routes->add('produtos', new Route(constant('URL_SUBFOLDER') .  '/produtos/', array('controller' => 'ProdutoController', 'method'=>'showListAction')));
 $routes->add('produtoCreate', new Route(constant('URL_SUBFOLDER') .  '/produto/create/{descricao}/{valor}/{qtdEstoque}/{estoqueMinimo}/{validade}', array('controller' => 'produtoController', 'method'=>'createAction')));
 $routes->add('produtoEdit', new Route(constant('URL_SUBFOLDER') .  '/produto/edit/{id}/{descricao}/{valor}/{qtdEstoque}/{estoqueMinimo}/{validade}', array('controller' => 'produtoController', 'method'=>'editAction')));
 $routes->add('produtoDelete', new Route(constant('URL_SUBFOLDER') .  '/produto/delete/{id}', array('controller' => 'produtoController', 'method'=>'deleteAction')));
+
+//Vendas Routes
+$routes->add('vendas', new Route(constant('URL_SUBFOLDER') .  '/vendas/', array('controller' => 'CompraController', 'method'=>'showListAction')));
+$routes->add('calcDesconto', new Route(constant('URL_SUBFOLDER') .  '/vendas/calcDesconto/{subtotal}', array('controller' => 'CompraController', 'method'=>'calcDesconto')));
+$routes->add('vendasCreateC', new Route(constant('URL_SUBFOLDER') .  '/vendas/create/{vendedorID}/{clienteID}/{produtoID}/{qtd}/{vlProduto}/{vlDesconto}/{vlTotal}/{qtdParcela}/{valorParcela}/{formaPagamento}', array('controller' => 'CompraController', 'method'=>'createAction')));
+$routes->add('vendasCreateD', new Route(constant('URL_SUBFOLDER') .  '/vendas/create/{vendedorID}/{clienteID}/{produtoID}/{qtd}/{vlProduto}/{vlDesconto}/{vlTotal}/{formaPagamento}', array('controller' => 'CompraController', 'method'=>'createAction')));
+$routes->add('vendaDelete', new Route(constant('URL_SUBFOLDER') .  '/vendas/delete/{id}', array('controller' => 'CompraController', 'method'=>'deleteAction')));

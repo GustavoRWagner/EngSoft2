@@ -1,3 +1,5 @@
+
+
 .modal-overlay {
   background-color: rgba(0, 0, 0, 0.5);
   position: absolute;
@@ -75,5 +77,8 @@ footer {
   color: #28a745;
 }
 .color-fail {
+  color: #dc3545;
+}
+.text-red{
   color: #dc3545;
 }

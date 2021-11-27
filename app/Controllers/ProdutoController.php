@@ -2,7 +2,9 @@
 
 namespace App\Controllers;
 
+use App\dao\ClienteDAO;
 use App\dao\ProdutoDAO;
+use App\dao\VendedorDAO;
 use App\Models\Produto;
 use Symfony\Component\Routing\RouteCollection;
 
@@ -12,6 +14,12 @@ class ProdutoController
     {
         $dao= new ProdutoDAO();
         $produtos = $dao->readMultiple();
+
+        $dao= new VendedorDAO();
+        $vendedores = $dao->readMultiple();
+
+        $dao= new ClienteDAO();
+        $clientes = $dao->readMultiple();
 
         require_once APP_ROOT . '/Views/Produtos.php';
     }
