@@ -127,6 +127,8 @@ include(HEADER);
             console.log(response);
             if (response == 1) {
                 showResponse("Deletado com sucesso!", "S");
+            } else if(response == 204){
+                showResponse("Esse cliente possui compras atreladas. não é possivel deletar!", "F");
             } else {
                 showResponse("Erro ao deletar!", "F");
             }

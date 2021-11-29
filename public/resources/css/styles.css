@@ -82,3 +82,21 @@ footer {
 .text-red{
   color: #dc3545;
 }
+#response-msg-2 {
+  position: absolute;
+  background-color: #fff;
+  width: 500px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 200px;
+  border: 1px solid;
+  border-radius: 20px;
+  z-index: 10;
+}
+#close {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+}

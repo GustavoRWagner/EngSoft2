@@ -97,7 +97,15 @@ class ClienteDAO
     }
 
     public function hasCompras($id){
-
+        $stmt = "SELECT COUNT(*) FROM compras WHERE cliente = ?";
+        $result = $this->pdo->prepare($stmt);
+        $result->execute([$id]);
+        $number_of_rows = $result->fetchColumn();
+        if ($number_of_rows > 0){
+            return true;
+        }else{
+            return false;
+        }
     }
 
 }

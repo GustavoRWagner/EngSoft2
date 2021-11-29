@@ -113,7 +113,7 @@ class Cliente
     public function delete()
     {
         if($this->hasCompras()){
-            return "Usuario já possui compras";
+            return 204;
         }else{
             $dao = new ClienteDAO();
             $response = $dao->delete($this->id);
@@ -122,7 +122,8 @@ class Cliente
     }
 
     public function hasCompras(){
-        //TODO
-        return false;
+        $dao = new ClienteDao();
+        $response = $dao->hasCompras($this->id);
+        return $response;
     }
 }

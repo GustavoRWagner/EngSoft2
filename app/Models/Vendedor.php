@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\dao\CompraDAO;
 use App\dao\VendedorDAO;
 
 class Vendedor
@@ -162,11 +163,6 @@ class Vendedor
     public function setSalarioBase($salarioBase)
     {
         $this->salarioBase = $salarioBase;
-    }
-
-    public function calcularComissão()
-    {
-        //TODO
     }
     private function generateMatricula(){
         $dao = new VendedorDAO();

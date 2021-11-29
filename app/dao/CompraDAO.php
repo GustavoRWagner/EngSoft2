@@ -34,27 +34,41 @@ class CompraDAO
 
     public function create(Compra $compra)
     {
-        $stmt = $this->pdo->prepare("INSERT INTO compras (vendedor, cliente, produto, qtd, valor, valorDesconto, valorTotal, parcelas, valorParcela, formaPagamento) VALUES (?,?,?,?,?,?,?,?,?,?)");
+        $produtoDAO = new ProdutoDAO();
+        $updateEstoque = $produtoDAO->updateEstoque($compra->getProduto(), $compra->getQtd());
+        if ($updateEstoque) {
+            $stmt = $this->pdo->prepare("INSERT INTO compras (vendedor, cliente, produto, qtd, valor, valorDesconto, valorTotal, parcelas, valorParcela, formaPagamento) VALUES (?,?,?,?,?,?,?,?,?,?)");
 
-        try {
-            if ($stmt->execute([$compra->getVendedor(), $compra->getCliente(), $compra->getProduto(), $compra->getQtd(), $compra->getValor(), $compra->getValorDesconto(), $compra->getValorTotal(), $compra->getParcelas(), $compra->getParcelas(), $compra->getFormaPagamento()])) {
-                return true;
+            try {
+                if ($stmt->execute([$compra->getVendedor(), $compra->getCliente(), $compra->getProduto(), $compra->getQtd(), $compra->getValor(), $compra->getValorDesconto(), $compra->getValorTotal(), $compra->getParcelas(), $compra->getValorParcela(), $compra->getFormaPagamento()])) {
+                    return true;
+                }
+            } catch (Exception $e) {
+                return false;
             }
-        } catch (Exception $e) {
-            return false;
         }
+
+
     }
-    public function delete($id){
+
+    public function delete($id)
+    {
         $query = $this->pdo->prepare("DELETE FROM compras WHERE id = ?");
         try {
             if ($query->execute([$id])) {
                 return True;
-            }
-            else{
+            } else {
                 return false;
             }
         } catch (\Exception $e) {
             return false;
         }
+    }
+
+    public function totalVendas($id){
+        $stmt = $this->pdo->prepare("SELECT sum(CAST(valorTotal AS decimal(18,2))) as total FROM compras WHERE vendedor = ?");
+        $stmt->execute([$id]);
+        $result = $stmt->fetchColumn();
+        return $result;
     }
 }

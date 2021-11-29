@@ -19,7 +19,7 @@ include(HEADER);
                     </div>
                     <div class="col-12 mb-2">
                         <label for="valor">Valor:</label>
-                        <input id="valor" name="valor" type="text" class="form-control" placeholder="Ex: 10,99">
+                        <input id="valor" name="valor" type="number" step=".01" class="form-control" placeholder="Ex: 10,99">
                     </div>
                     <div class="col-12 mb-2">
                         <label for="qtdEstoque">Quantidade em Estoque</label>
@@ -83,7 +83,7 @@ include(HEADER);
                     </div>
                     <div id="qtdParcelasField" class="col-6 mb-2 hide">
                         <label for="qtdParcelas">Parcelas:</label>
-                        <input id="qtdParcelas" name="qtdParcelas" type="number" class="form-control" min="1" max="3"
+                        <input id="qtdParcelas" name="qtdParcelas" type="number" class="form-control" min="1" max="1"
                                onchange="calcVlParcela()">
                     </div>
                     <div id="vlParcelaField" class="col-6 mb-2 hide">
@@ -131,10 +131,10 @@ include(HEADER);
                         <div class="row">
                             <div class="col-12 text-right d-flex mt-1">
                                 <div id="edit-<?php echo $produto['id']; ?>"
-                                     onclick="editCliente(<?php echo $produto['id']; ?>)"><i class="fas fa-edit"></i>
+                                     onclick="editProduto(<?php echo $produto['id']; ?>)"><i class="fas fa-edit"></i>
                                 </div>
                                 <div id="delete-<?php echo $produto['id']; ?>"
-                                     onclick="deleteCliente(<?php echo $produto['id']; ?>)"><i
+                                     onclick="deleteProduto(<?php echo $produto['id']; ?>)"><i
                                             class="fas fa-trash-alt"></i></div>
                             </div>
                             <input id="estoqueMinimo-<?php echo $produto['id']; ?>" type="hidden"
@@ -228,8 +228,8 @@ include(HEADER);
             // Callback handler that will be called on success
             request.done(function (response, textStatus, jqXHR) {
                 console.log(response);
-                $("#desconto").val(response);
-                calcSubtotal();
+                showResponse("Venda efetuada com sucesso!", "S");
+
             });
 
             // Callback handler that will be called on failure
@@ -312,7 +312,7 @@ include(HEADER);
             $("#modal-overlay").addClass("show");
         }
 
-        function editCliente(id) {
+        function editProduto(id) {
             $("#modal-title").text("Editar Produto");
             $("#form-type").val("edit");
             $("#id").val(id);
@@ -326,7 +326,7 @@ include(HEADER);
             $("#modal-overlay").addClass("show");
         }
 
-        function deleteCliente(id) {
+        function deleteProduto(id) {
             var endpoint = "<?php echo SITE_URL; ?>/produto/delete/" + id
             request = $.ajax({
                 url: endpoint,
@@ -338,6 +338,8 @@ include(HEADER);
                 console.log(response);
                 if (response == 1) {
                     showResponse("Deletado com sucesso!", "S");
+                } else if(response == 204) {
+                    showResponse("Esse produto possui compras atreladas. não é possivel deletar!", "F");
                 } else {
                     showResponse("Erro ao deletar!", "F");
                 }
@@ -375,11 +377,12 @@ include(HEADER);
 
         function saveAction() {
             var endpoint = ""
+            let valor = $("#valor").val().replace(".",",")
             if ($("#form-type").val() == 'edit') {
-                endpoint = "<?php echo SITE_URL; ?>/produto/edit/" + $("#id").val() + "/" + $("#descricao").val() + "/" + $("#valor").val() + "/" + $("#qtdEstoque").val() + "/" + $("#estoqueMinimo").val() + "/" + $("#validade").val()
+                endpoint = "<?php echo SITE_URL; ?>/produto/edit/" + $("#id").val() + "/" + $("#descricao").val() + "/" + valor + "/" + $("#qtdEstoque").val() + "/" + $("#estoqueMinimo").val() + "/" + $("#validade").val()
             }
             if ($("#form-type").val() == 'create') {
-                endpoint = "<?php echo SITE_URL; ?>/produto/create/" + $("#descricao").val() + "/" + $("#valor").val() + "/" + $("#qtdEstoque").val() + "/" + $("#estoqueMinimo").val() + "/" + $("#validade").val()
+                endpoint = "<?php echo SITE_URL; ?>/produto/create/" + $("#descricao").val() + "/" + valor + "/" + $("#qtdEstoque").val() + "/" + $("#estoqueMinimo").val() + "/" + $("#validade").val()
             }
             request = $.ajax({
                 url: endpoint,
@@ -399,7 +402,7 @@ include(HEADER);
             // Callback handler that will be called on failure
             request.fail(function (jqXHR, textStatus, errorThrown) {
                 // Log the error to the console
-                console.error(
+                console.log(
                     "The following error occurred: " +
                     textStatus, errorThrown
                 );

@@ -20,6 +20,7 @@ $routes->add('vendedores', new Route(constant('URL_SUBFOLDER') .  '/vendedores/'
 $routes->add('vendedorCreate', new Route(constant('URL_SUBFOLDER') .  '/vendedor/create/{nome}/{endereco}/{telefone}/{cpf}/{salarioBase}', array('controller' => 'VendedorController', 'method'=>'createAction')));
 $routes->add('vendedorEdit', new Route(constant('URL_SUBFOLDER') .  '/vendedor/edit/{id}/{matricula}/{nome}/{endereco}/{telefone}/{cpf}/{salarioBase}', array('controller' => 'VendedorController', 'method'=>'editAction')));
 $routes->add('vendedorDelete', new Route(constant('URL_SUBFOLDER') .  '/vendedor/delete/{id}', array('controller' => 'VendedorController', 'method'=>'deleteAction'), array('id' => '[0-9]+')));
+$routes->add('vendedorCalcComissao', new Route(constant('URL_SUBFOLDER') .  '/vendedor/calcComissao/{id}', array('controller' => 'VendedorController', 'method'=>'calcComissao'), array('id' => '[0-9]+')));
 
 //Produtos Routes
 $routes->add('produtos', new Route(constant('URL_SUBFOLDER') .  '/produtos/', array('controller' => 'ProdutoController', 'method'=>'showListAction')));

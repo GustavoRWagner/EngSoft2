@@ -32,6 +32,7 @@ class ProdutoController
     }
     public function editAction(int $id,string $descricao, string $valor, int $qtdEstoque, int $estoqueMinimo, string $validade,  RouteCollection $routes)
     {
+        $valor = floatval(str_replace(',', '.', str_replace('.', '', $valor)));
         $Produto = new Produto();
         $Produto->read($id);
         $Produto->setDescricao($descricao);

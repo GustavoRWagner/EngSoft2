@@ -77,16 +77,57 @@ class ProdutoDAO
     }
 
     public function delete($id){
-        $query = $this->pdo->prepare("DELETE FROM produtos WHERE id = ?");
-        try {
-            if ($query->execute([$id])) {
-                return True;
-            }
-            else{
+
+        if(!$this->hasVendas($id)){
+            $query = $this->pdo->prepare("DELETE FROM produtos WHERE id = ?");
+            try {
+                if ($query->execute([$id])) {
+                    return True;
+                }
+                else{
+                    return false;
+                }
+            } catch (\Exception $e) {
                 return false;
             }
-        } catch (\Exception $e) {
+        }
+
+        else{
+            return 204;
+        }
+
+    }
+
+    public function hasVendas($id){
+        $stmt = "SELECT COUNT(*) FROM compras WHERE produto = ?";
+        $result = $this->pdo->prepare($stmt);
+        $result->execute([$id]);
+        $number_of_rows = $result->fetchColumn();
+        if ($number_of_rows > 0){
+            return true;
+        }else{
             return false;
+        }
+    }
+
+    public function updateEstoque($produto, $qtd){
+        $stmt = "SELECT qtdEstoque FROM produtos WHERE id = ?";
+        $result = $this->pdo->prepare($stmt);
+        $result->execute([$produto]);
+        $qtdEstoque = $result->fetchColumn();
+        if($qtd <= $qtdEstoque){
+            $stmt = $this->pdo->prepare("UPDATE produtos SET qtdEstoque=? WHERE id=?");
+            try{
+                $newqtd = $qtdEstoque - $qtd;
+                $stmt->execute([$newqtd, $produto]);
+                if($stmt->rowCount() > 0){
+                    return true;
+                }else{
+                    return false;
+                }
+            }catch (\Exception $e){
+                return false;
+            }
         }
     }
 }
