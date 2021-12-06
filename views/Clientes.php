@@ -5,7 +5,7 @@ include(HEADER);
     <h1 id="response-txt" class="w-100 text-center"></h1>
     <div id="confirm" class="btn-success" onclick="reloadPage()">Ok!</div>
 </div>
-<div id="modal-overlay" class="modal-overlay hide">
+<div id="modal-overlay" class="modal-overlay hide bg-primary">
     <div class="modal-box">
         <h1 id="modal-title"></h1>
         <form id="editClienteForm" action="">
@@ -30,7 +30,7 @@ include(HEADER);
                 </div>
                 <div class="col-12 mb-2">
                     <label for="cpf">CPF:</label>
-                    <input id="cpf" name="cpf" type="text" class="form-control" oninput="mascara(this)" placeholder="Ex: 111.222.777-33">
+                    <input id="cpf" name="cpf" type="text" class="form-control" oninput="cpfMask(this)" placeholder="Ex: 111.222.777-33">
                 </div>
                 <div class="col-12 d-flex">
                     <div id="save" class="btn-success" onclick="saveAction()">Salvar</div>
@@ -55,6 +55,9 @@ include(HEADER);
             <?php foreach ($clientes as $cliente) : ?>
                 <div class="col-4 client-box mb-4" id="<?php echo $cliente['id']; ?>">
                     <div class="row">
+                        <div>
+                            <img src="../public/img/imagempessoa.jpg" alt="foto de perfil">
+                        </div>
                         <div class="col-12">
                             <strong>Nome: </strong>
                             <spam id="nome-<?php echo $cliente['id']; ?>"><?php echo $cliente['nome']; ?></spam>
@@ -108,7 +111,7 @@ include(HEADER);
         $("#modal-overlay").addClass("show");
     }
 
-    function mascara(i) {
+    function cpfMask(i) {
         var v = i.value;
         i.setAttribute("maxlength", "14");
         if (v.length == 3 || v.length == 7) i.value += ".";
@@ -127,7 +130,7 @@ include(HEADER);
             console.log(response);
             if (response == 1) {
                 showResponse("Deletado com sucesso!", "S");
-            } else if(response == 204){
+            } else if (response == 204) {
                 showResponse("Esse cliente possui compras atreladas. não é possivel deletar!", "F");
             } else {
                 showResponse("Erro ao deletar!", "F");
